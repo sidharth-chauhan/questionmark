@@ -21,15 +21,9 @@ const styles = StyleSheet.create({
   container: {
     flexDirection: "row",
     alignItems: "center",
-    backgroundColor: colors.surface,
-    paddingHorizontal: 12,
-    paddingVertical: 7,
-    borderRadius: 20,
-    shadowColor: "#14171C",
-    shadowOpacity: 0.05,
-    shadowRadius: 6,
-    shadowOffset: { width: 0, height: 2 },
-    elevation: 1,
+    backgroundColor: "transparent",
+    paddingHorizontal: 8,
+    paddingVertical: 4,
   },
   number: {
     fontSize: 13,

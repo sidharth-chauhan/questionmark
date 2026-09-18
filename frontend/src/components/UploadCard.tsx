@@ -339,12 +339,15 @@ const styles = StyleSheet.create({
     marginBottom: 16,
   },
   captureBox: {
-    backgroundColor: colors.surfaceSubtle,
+    backgroundColor: "transparent",
     borderRadius: 14,
     paddingVertical: 26,
     paddingHorizontal: 16,
     alignItems: "center",
     marginBottom: 18,
+    borderWidth: 2,
+    borderColor: colors.borderStrong,
+    borderStyle: "dashed",
   },
   captureIconWrap: {
     width: 44,

@@ -366,16 +366,8 @@ const styles = StyleSheet.create({
   signOutBtn: {
     flexDirection: "row",
     alignItems: "center",
-    gap: 5,
-    backgroundColor: colors.surface,
-    paddingHorizontal: 12,
-    paddingVertical: 7,
-    borderRadius: 20,
-    shadowColor: "#14171C",
-    shadowOpacity: 0.04,
-    shadowRadius: 6,
-    shadowOffset: { width: 0, height: 2 },
-    elevation: 1,
+    gap: 6,
+    paddingVertical: 4,
   },
   signOutText: { fontSize: 12, color: colors.accentRed, fontWeight: "600" },
   card: {
@@ -448,7 +440,7 @@ const styles = StyleSheet.create({
   subjectRowLast: { borderBottomWidth: 0 },
   subjectName: { fontSize: 14, fontWeight: "600", color: colors.textPrimary },
   statusChip: {
-    backgroundColor: "#EAF3EE",
+    backgroundColor: "rgba(92, 174, 130, 0.15)",
     paddingHorizontal: 9,
     paddingVertical: 4,
     borderRadius: 20,
