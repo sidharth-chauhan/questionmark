@@ -1,0 +1,75 @@
+services:
+  # 1. MongoDB Database
+  mongo:
+    image: mongo:7.0-jammy
+    container_name: questionmark-mongo
+    restart: unless-stopped
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo_data:/data/db
+    networks:
+      - questionmark_net
+    healthcheck:
+      test: ["CMD", "mongosh", "--eval", "db.adminCommand('ping')"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 10s
+
+  # 2. Express + Node.js Backend API
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: questionmark-backend
+    restart: unless-stopped
+    depends_on:
+      mongo:
+        condition: service_healthy
+    environment:
+      - PORT=3000
+      - NODE_ENV=production
+      - MONGODB_URI=mongodb://mongo:27017/questionmark
+      - JWT_SECRET=${JWT_SECRET:-questionmark_super_secret_jwt_key_2025_jee_prep}
+      - GEMINI_API_KEY=${GEMINI_API_KEY:-}
+      - GEMINI_MODEL=${GEMINI_MODEL:-gemini-2.0-flash}
+      - CLIENT_URL=${CLIENT_URL:-http://localhost:8080}
+      - APP_NAME=QuestionMark
+      - RANKS_PER_MARK_CONSTANT=${RANKS_PER_MARK_CONSTANT:-500}
+      - CARELESS_MISTAKE_WINDOW_DAYS=${CARELESS_MISTAKE_WINDOW_DAYS:-14}
+      - CRON_SCHEDULE=${CRON_SCHEDULE:-30 15 * * *}
+    ports:
+      - "3000:3000"
+    networks:
+      - questionmark_net
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:3000/api/health"]
+      interval: 15s
+      timeout: 5s
+      retries: 3
+      start_period: 10s
+
+  # 3. React Frontend with Nginx Reverse Proxy
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: questionmark-frontend
+    restart: unless-stopped
+    depends_on:
+      backend:
+        condition: service_healthy
+    ports:
+      - "8080:80"
+    networks:
+      - questionmark_net
+
+volumes:
+  mongo_data:
+    name: questionmark_mongo_data
+
+networks:
+  questionmark_net:
+    name: questionmark_network
+    driver: bridge

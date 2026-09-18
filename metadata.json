@@ -1,0 +1,6 @@
+{
+  "name": "QuestionMark",
+  "description": "JEE revision and weak-spots tracking web app with Gemini-powered mistake analysis",
+  "requestFramePermissions": ["camera"],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
