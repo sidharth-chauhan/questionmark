@@ -8,8 +8,11 @@ import {
   Alert,
   ActivityIndicator,
   StyleSheet,
+  KeyboardAvoidingView,
+  Platform,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
+import { LogOut, Check } from "lucide-react-native";
 import { colors } from "../theme/colors";
 import { typography } from "../theme/typography";
 import { useAuth } from "../context/AuthContext";
@@ -121,424 +124,360 @@ export const ProfileScreen: React.FC = () => {
 
   return (
     <SafeAreaView style={styles.safeArea} edges={["top", "left", "right"]}>
-      <ScrollView
-        contentContainerStyle={styles.scrollContent}
-        showsVerticalScrollIndicator={false}
-      >
-        {/* Header */}
-        <View style={styles.headerRow}>
-          <View>
-            <Text style={styles.title}>Profile</Text>
-            <Text style={styles.subtitle}>
-              Student details and target milestones.
-            </Text>
-          </View>
-
-          <TouchableOpacity onPress={confirmSignOut} style={styles.signOutBtn}>
-            <Text style={styles.signOutText}>Sign out</Text>
-          </TouchableOpacity>
-        </View>
-
-        {/* Student Details Form — Genuine Focal Point */}
-        <View style={styles.card}>
-          <View style={styles.fieldGroup}>
-            <Text style={styles.fieldLabel}>Student name</Text>
-            <TextInput
-              value={name}
-              onChangeText={setName}
-              style={styles.textInput}
-              placeholder="Your full name"
-              placeholderTextColor={colors.textSecondary}
-            />
-          </View>
-
-          <View style={styles.fieldGroup}>
-            <Text style={styles.fieldLabel}>Email address</Text>
-            <TextInput
-              value={user?.email || ""}
-              editable={false}
-              style={[styles.textInput, styles.textInputDisabled]}
-            />
-          </View>
-
-          {/* Target Exam Selection */}
-          <View style={styles.fieldGroup}>
-            <Text style={styles.fieldLabel}>Target exam</Text>
-            <View style={styles.chipsRow}>
-              <TouchableOpacity
-                onPress={() => setTargetExam("JEE_MAIN")}
-                style={[
-                  styles.chip,
-                  targetExam === "JEE_MAIN" && styles.chipActive,
-                ]}
-              >
-                <Text
-                  style={[
-                    styles.chipText,
-                    targetExam === "JEE_MAIN" && styles.chipTextActive,
-                  ]}
-                >
-                  JEE Main
-                </Text>
-              </TouchableOpacity>
-              <TouchableOpacity
-                onPress={() => setTargetExam("JEE_ADVANCED")}
-                style={[
-                  styles.chip,
-                  targetExam === "JEE_ADVANCED" && styles.chipActive,
-                ]}
-              >
-                <Text
-                  style={[
-                    styles.chipText,
-                    targetExam === "JEE_ADVANCED" && styles.chipTextActive,
-                  ]}
-                >
-                  JEE Advanced
-                </Text>
-              </TouchableOpacity>
+      <KeyboardAvoidingView behavior={Platform.OS === "ios" ? "padding" : "height"} style={styles.container}>
+        <ScrollView
+          contentContainerStyle={styles.scrollContent}
+          showsVerticalScrollIndicator={false}
+          keyboardShouldPersistTaps="handled"
+        >
+          {/* Header */}
+          <View style={styles.headerRow}>
+            <View>
+              <Text style={styles.title}>Profile</Text>
+              <Text style={styles.subtitle}>Student details and target milestones.</Text>
             </View>
+
+            <TouchableOpacity onPress={confirmSignOut} style={styles.signOutBtn} activeOpacity={0.75}>
+              <LogOut size={13} color={colors.accentRed} strokeWidth={2.2} />
+              <Text style={styles.signOutText}>Sign out</Text>
+            </TouchableOpacity>
           </View>
 
-          {/* Target Year Selection */}
-          <View style={styles.fieldGroup}>
-            <Text style={styles.fieldLabel}>Target year</Text>
-            <View style={styles.chipsRow}>
-              {[2025, 2026, 2027].map((yr) => (
+          {/* Student Details Form — Genuine Focal Point */}
+          <View style={styles.card}>
+            <View style={styles.fieldGroup}>
+              <Text style={styles.fieldLabel}>Student name</Text>
+              <TextInput
+                value={name}
+                onChangeText={setName}
+                style={styles.textInput}
+                placeholder="Your full name"
+                placeholderTextColor={colors.textMuted}
+              />
+            </View>
+
+            <View style={styles.fieldGroup}>
+              <Text style={styles.fieldLabel}>Email address</Text>
+              <TextInput
+                value={user?.email || ""}
+                editable={false}
+                style={[styles.textInput, styles.textInputDisabled]}
+              />
+            </View>
+
+            {/* Target Exam Selection */}
+            <View style={styles.fieldGroup}>
+              <Text style={styles.fieldLabel}>Target exam</Text>
+              <View style={styles.chipsRow}>
                 <TouchableOpacity
-                  key={yr}
-                  onPress={() => setTargetYear(yr)}
-                  style={[styles.chip, targetYear === yr && styles.chipActive]}
+                  onPress={() => setTargetExam("JEE_MAIN")}
+                  style={[styles.chip, targetExam === "JEE_MAIN" && styles.chipActive]}
+                  activeOpacity={0.75}
                 >
-                  <Text
-                    style={[
-                      styles.chipText,
-                      targetYear === yr && styles.chipTextActive,
-                    ]}
-                  >
-                    {yr}
+                  <Text style={[styles.chipText, targetExam === "JEE_MAIN" && styles.chipTextActive]}>
+                    JEE Main
                   </Text>
                 </TouchableOpacity>
-              ))}
+                <TouchableOpacity
+                  onPress={() => setTargetExam("JEE_ADVANCED")}
+                  style={[styles.chip, targetExam === "JEE_ADVANCED" && styles.chipActive]}
+                  activeOpacity={0.75}
+                >
+                  <Text style={[styles.chipText, targetExam === "JEE_ADVANCED" && styles.chipTextActive]}>
+                    JEE Advanced
+                  </Text>
+                </TouchableOpacity>
+              </View>
             </View>
-          </View>
 
-          <View style={styles.fieldGroup}>
-            <Text style={styles.fieldLabel}>Coaching center</Text>
-            <TextInput
-              value="Self-study (independent aspirant)"
-              editable={false}
-              style={[styles.textInput, styles.textInputDisabled]}
-            />
-          </View>
+            {/* Target Year Selection */}
+            <View style={styles.fieldGroup}>
+              <Text style={styles.fieldLabel}>Target year</Text>
+              <View style={styles.chipsRow}>
+                {[2025, 2026, 2027].map((yr) => (
+                  <TouchableOpacity
+                    key={yr}
+                    onPress={() => setTargetYear(yr)}
+                    style={[styles.chip, targetYear === yr && styles.chipActive]}
+                    activeOpacity={0.75}
+                  >
+                    <Text style={[styles.chipText, targetYear === yr && styles.chipTextActive]}>{yr}</Text>
+                  </TouchableOpacity>
+                ))}
+              </View>
+            </View>
 
-          <View style={styles.saveRow}>
+            <View style={styles.fieldGroup}>
+              <Text style={styles.fieldLabel}>Coaching center</Text>
+              <TextInput
+                value="Self-study (independent aspirant)"
+                editable={false}
+                style={[styles.textInput, styles.textInputDisabled]}
+              />
+            </View>
+
             <TouchableOpacity
               onPress={handleUpdateProfile}
               disabled={isSaving}
-              style={styles.saveBtn}
+              style={[styles.saveBtn, isSaving && styles.saveBtnDisabled]}
+              activeOpacity={0.85}
             >
               {isSaving ? (
                 <ActivityIndicator size="small" color="#FFFFFF" />
+              ) : saveSuccess ? (
+                <View style={styles.saveSuccessRow}>
+                  <Check size={15} color="#FFFFFF" strokeWidth={2.5} />
+                  <Text style={styles.saveBtnText}>Saved</Text>
+                </View>
               ) : (
                 <Text style={styles.saveBtnText}>Save changes</Text>
               )}
             </TouchableOpacity>
-
-            {saveSuccess && (
-              <Text style={styles.saveSuccessText}>✓ Saved</Text>
-            )}
-          </View>
-        </View>
-
-        {/* Enrolled Subjects */}
-        <View style={styles.section}>
-          <View style={styles.sectionTitleBlock}>
-            <Text style={styles.sectionTitle}>Enrolled subjects</Text>
-            <Text style={styles.sectionSubtitle}>
-              Core subjects monitored for mistake diagnostics.
-            </Text>
           </View>
 
-          <View style={styles.hairlineList}>
-            {subjects.length > 0 ? (
-              subjects.map((sub) => (
-                <View key={sub._id} style={styles.subjectRow}>
-                  <Text style={styles.subjectName}>{sub.name}</Text>
-                  <Text style={styles.subjectStatus}>Active</Text>
-                </View>
-              ))
-            ) : (
-              <>
-                <View style={styles.subjectRow}>
-                  <Text style={styles.subjectName}>Physics</Text>
-                  <Text style={styles.subjectStatus}>Active</Text>
-                </View>
-                <View style={styles.subjectRow}>
-                  <Text style={styles.subjectName}>Chemistry</Text>
-                  <Text style={styles.subjectStatus}>Active</Text>
-                </View>
-                <View style={styles.subjectRow}>
-                  <Text style={styles.subjectName}>Math</Text>
-                  <Text style={styles.subjectStatus}>Active</Text>
-                </View>
-              </>
-            )}
-          </View>
-        </View>
+          {/* Enrolled Subjects */}
+          <View style={styles.section}>
+            <View style={styles.sectionTitleBlock}>
+              <Text style={styles.sectionTitle}>Enrolled subjects</Text>
+              <Text style={styles.sectionSubtitle}>Core subjects monitored for mistake diagnostics.</Text>
+            </View>
 
-        {/* Mock Tests Logged */}
-        <View style={styles.section}>
-          <View style={styles.sectionTitleBlock}>
-            <Text style={styles.sectionTitle}>Logged tests</Text>
-            <Text style={styles.sectionSubtitle}>
-              Mock test series tagged with error photos.
-            </Text>
-          </View>
-
-          {/* Quick add test */}
-          <View style={styles.addTestRow}>
-            <TextInput
-              value={testName}
-              onChangeText={setTestName}
-              placeholder="e.g. Allen Minor 4, FIITJEE AITS 2"
-              placeholderTextColor={colors.textSecondary}
-              style={[styles.textInput, styles.addTestInput]}
-            />
-            <TouchableOpacity
-              onPress={handleCreateTest}
-              disabled={isCreatingTest || !testName.trim()}
-              style={[
-                styles.addTestBtn,
-                (!testName.trim() || isCreatingTest) && styles.addTestBtnDisabled,
-              ]}
-            >
-              <Text style={styles.addTestBtnText}>Add test</Text>
-            </TouchableOpacity>
-          </View>
-
-          <View style={styles.hairlineList}>
-            {tests.length === 0 ? (
-              <View style={styles.emptyTestsBox}>
-                <Text style={styles.emptyTestsText}>
-                  No test series added yet. Add tests above to organize your
-                  errors by mock exam.
-                </Text>
-              </View>
-            ) : (
-              tests.map((t) => (
-                <View key={t._id} style={styles.testRow}>
-                  <View>
-                    <Text style={styles.testName}>{t.testName}</Text>
-                    <Text style={styles.testDate}>
-                      {t.testDate
-                        ? new Date(t.testDate).toLocaleDateString("en-IN")
-                        : "Recent"}
-                    </Text>
+            <View style={styles.hairlineList}>
+              {subjects.length > 0 ? (
+                subjects.map((sub) => (
+                  <View key={sub._id} style={styles.subjectRow}>
+                    <Text style={styles.subjectName}>{sub.name}</Text>
+                    <View style={styles.statusChip}>
+                      <Text style={styles.subjectStatus}>Active</Text>
+                    </View>
                   </View>
-                  <Text style={styles.testErrorsCount}>
-                    {t.mistakesCount || 0}{" "}
-                    {(t.mistakesCount || 0) === 1 ? "error" : "errors"}
+                ))
+              ) : (
+                <>
+                  <View style={styles.subjectRow}>
+                    <Text style={styles.subjectName}>Physics</Text>
+                    <View style={styles.statusChip}>
+                      <Text style={styles.subjectStatus}>Active</Text>
+                    </View>
+                  </View>
+                  <View style={styles.subjectRow}>
+                    <Text style={styles.subjectName}>Chemistry</Text>
+                    <View style={styles.statusChip}>
+                      <Text style={styles.subjectStatus}>Active</Text>
+                    </View>
+                  </View>
+                  <View style={[styles.subjectRow, styles.subjectRowLast]}>
+                    <Text style={styles.subjectName}>Math</Text>
+                    <View style={styles.statusChip}>
+                      <Text style={styles.subjectStatus}>Active</Text>
+                    </View>
+                  </View>
+                </>
+              )}
+            </View>
+          </View>
+
+          {/* Mock Tests Logged */}
+          <View style={styles.section}>
+            <View style={styles.sectionTitleBlock}>
+              <Text style={styles.sectionTitle}>Logged tests</Text>
+              <Text style={styles.sectionSubtitle}>Mock test series tagged with error photos.</Text>
+            </View>
+
+            {/* Quick add test */}
+            <View style={styles.addTestRow}>
+              <TextInput
+                value={testName}
+                onChangeText={setTestName}
+                placeholder="e.g. Allen Minor 4, FIITJEE AITS 2"
+                placeholderTextColor={colors.textMuted}
+                style={[styles.textInput, styles.addTestInput]}
+              />
+              <TouchableOpacity
+                onPress={handleCreateTest}
+                disabled={isCreatingTest || !testName.trim()}
+                style={[
+                  styles.addTestBtn,
+                  (!testName.trim() || isCreatingTest) && styles.addTestBtnDisabled,
+                ]}
+                activeOpacity={0.85}
+              >
+                {isCreatingTest ? (
+                  <ActivityIndicator size="small" color="#FFFFFF" />
+                ) : (
+                  <Text style={styles.addTestBtnText}>Add</Text>
+                )}
+              </TouchableOpacity>
+            </View>
+
+            <View style={styles.hairlineList}>
+              {tests.length === 0 ? (
+                <View style={styles.emptyTestsBox}>
+                  <Text style={styles.emptyTestsText}>
+                    No test series added yet. Add tests above to organize your errors by mock exam.
                   </Text>
                 </View>
-              ))
-            )}
+              ) : (
+                tests.map((t, idx) => (
+                  <View
+                    key={t._id}
+                    style={[styles.testRow, idx === tests.length - 1 && styles.testRowLast]}
+                  >
+                    <View style={styles.testInfo}>
+                      <Text style={styles.testName}>{t.testName}</Text>
+                      <Text style={styles.testDate}>
+                        {t.testDate ? new Date(t.testDate).toLocaleDateString("en-IN") : "Recent"}
+                      </Text>
+                    </View>
+                    <View style={styles.testErrorsPill}>
+                      <Text style={styles.testErrorsCount}>
+                        {t.mistakesCount || 0} {(t.mistakesCount || 0) === 1 ? "error" : "errors"}
+                      </Text>
+                    </View>
+                  </View>
+                ))
+              )}
+            </View>
           </View>
-        </View>
-      </ScrollView>
+        </ScrollView>
+      </KeyboardAvoidingView>
     </SafeAreaView>
   );
 };
 
 const styles = StyleSheet.create({
-  safeArea: {
-    flex: 1,
-    backgroundColor: colors.background,
-  },
-  scrollContent: {
-    paddingHorizontal: 16,
-    paddingTop: 16,
-    paddingBottom: 32,
-  },
+  safeArea: { flex: 1, backgroundColor: colors.background },
+  container: { flex: 1 },
+  scrollContent: { paddingHorizontal: 18, paddingTop: 20, paddingBottom: 32 },
   headerRow: {
     flexDirection: "row",
     justifyContent: "space-between",
-    alignItems: "baseline",
-    marginBottom: 16,
+    alignItems: "flex-start",
+    marginBottom: 18,
   },
-  title: {
-    ...typography.h1,
-  },
-  subtitle: {
-    ...typography.bodySecondary,
-    marginTop: 2,
-  },
+  title: { ...typography.h1, fontWeight: "700" },
+  subtitle: { ...typography.bodySecondary, marginTop: 3, maxWidth: 220 },
   signOutBtn: {
-    borderWidth: 1,
-    borderColor: colors.border,
-    paddingHorizontal: 10,
-    paddingVertical: 5,
-    borderRadius: 3,
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 5,
     backgroundColor: colors.surface,
+    paddingHorizontal: 12,
+    paddingVertical: 7,
+    borderRadius: 20,
+    shadowColor: "#14171C",
+    shadowOpacity: 0.04,
+    shadowRadius: 6,
+    shadowOffset: { width: 0, height: 2 },
+    elevation: 1,
   },
-  signOutText: {
-    fontSize: 11,
-    color: colors.textSecondary,
-    fontWeight: "500",
-  },
+  signOutText: { fontSize: 12, color: colors.accentRed, fontWeight: "600" },
   card: {
     backgroundColor: colors.surface,
-    borderWidth: 1,
-    borderColor: colors.border,
-    padding: 16,
-    borderRadius: 4,
+    padding: 22,
+    borderRadius: 18,
+    shadowColor: "#14171C",
+    shadowOpacity: 0.04,
+    shadowRadius: 14,
+    shadowOffset: { width: 0, height: 6 },
+    elevation: 1,
   },
-  fieldGroup: {
-    marginBottom: 12,
-  },
-  fieldLabel: {
-    ...typography.caption,
-    marginBottom: 4,
-  },
+  fieldGroup: { marginBottom: 16 },
+  fieldLabel: { ...typography.caption, marginBottom: 7, fontWeight: "600", color: colors.textPrimary },
   textInput: {
-    backgroundColor: colors.surface,
-    borderWidth: 1,
-    borderColor: colors.border,
-    paddingHorizontal: 10,
-    paddingVertical: 8,
-    borderRadius: 3,
-    fontSize: 12,
+    backgroundColor: colors.surfaceSubtle,
+    paddingHorizontal: 14,
+    paddingVertical: 13,
+    borderRadius: 12,
+    fontSize: 14,
     color: colors.textPrimary,
   },
   textInputDisabled: {
-    backgroundColor: colors.surfaceSubtle,
-    color: colors.textSecondary,
+    color: colors.textMuted,
   },
-  chipsRow: {
-    flexDirection: "row",
-    gap: 8,
-  },
+  chipsRow: { flexDirection: "row", gap: 9, flexWrap: "wrap" },
   chip: {
-    paddingHorizontal: 12,
-    paddingVertical: 6,
-    borderRadius: 3,
+    paddingHorizontal: 14,
+    paddingVertical: 8,
+    borderRadius: 20,
     borderWidth: 1,
     borderColor: colors.border,
     backgroundColor: colors.surface,
   },
-  chipActive: {
-    backgroundColor: colors.primary,
-    borderColor: colors.primary,
-  },
-  chipText: {
-    fontSize: 11,
-    color: colors.textSecondary,
-  },
-  chipTextActive: {
-    color: "#FFFFFF",
-    fontWeight: "600",
-  },
-  saveRow: {
-    flexDirection: "row",
-    alignItems: "center",
-    gap: 12,
-    marginTop: 6,
-  },
+  chipActive: { backgroundColor: colors.primary, borderColor: colors.primary },
+  chipText: { fontSize: 12.5, fontWeight: "500", color: colors.textSecondary },
+  chipTextActive: { color: "#FFFFFF", fontWeight: "700" },
   saveBtn: {
     backgroundColor: colors.primary,
-    paddingHorizontal: 14,
-    paddingVertical: 8,
-    borderRadius: 3,
+    paddingVertical: 14,
+    borderRadius: 12,
+    alignItems: "center",
+    marginTop: 4,
   },
-  saveBtnText: {
-    color: "#FFFFFF",
-    fontSize: 12,
-    fontWeight: "600",
-  },
-  saveSuccessText: {
-    color: colors.accentGreen,
-    fontSize: 12,
-    fontWeight: "600",
-  },
-  section: {
-    marginTop: 24,
-  },
-  sectionTitleBlock: {
-    marginBottom: 8,
-  },
-  sectionTitle: {
-    ...typography.h2,
-  },
-  sectionSubtitle: {
-    ...typography.caption,
-    marginTop: 1,
-  },
+  saveBtnDisabled: { opacity: 0.5 },
+  saveBtnText: { color: "#FFFFFF", fontSize: 14, fontWeight: "700" },
+  saveSuccessRow: { flexDirection: "row", alignItems: "center", gap: 6 },
+  section: { marginTop: 28 },
+  sectionTitleBlock: { marginBottom: 10 },
+  sectionTitle: { ...typography.h2, fontWeight: "700" },
+  sectionSubtitle: { ...typography.bodySecondary, marginTop: 2 },
   hairlineList: {
-    borderTopWidth: 1,
-    borderTopColor: colors.border,
+    backgroundColor: colors.surface,
+    borderRadius: 16,
+    paddingHorizontal: 16,
+    shadowColor: "#14171C",
+    shadowOpacity: 0.03,
+    shadowRadius: 10,
+    shadowOffset: { width: 0, height: 3 },
+    elevation: 1,
   },
   subjectRow: {
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
-    paddingVertical: 10,
+    paddingVertical: 13,
     borderBottomWidth: 1,
     borderBottomColor: colors.border,
   },
-  subjectName: {
-    fontSize: 13,
-    fontWeight: "500",
-    color: colors.textPrimary,
+  subjectRowLast: { borderBottomWidth: 0 },
+  subjectName: { fontSize: 14, fontWeight: "600", color: colors.textPrimary },
+  statusChip: {
+    backgroundColor: "#EAF3EE",
+    paddingHorizontal: 9,
+    paddingVertical: 4,
+    borderRadius: 20,
   },
-  subjectStatus: {
-    ...typography.caption,
-  },
-  addTestRow: {
-    flexDirection: "row",
-    gap: 8,
-    marginBottom: 10,
-  },
-  addTestInput: {
-    flex: 1,
-  },
+  subjectStatus: { color: colors.accentGreen, fontSize: 11.5, fontWeight: "700" },
+  addTestRow: { flexDirection: "row", gap: 8, marginBottom: 12 },
+  addTestInput: { flex: 1 },
   addTestBtn: {
     backgroundColor: colors.primary,
-    paddingHorizontal: 12,
+    paddingHorizontal: 18,
     justifyContent: "center",
-    borderRadius: 3,
+    alignItems: "center",
+    borderRadius: 12,
   },
-  addTestBtnDisabled: {
-    opacity: 0.4,
-  },
-  addTestBtnText: {
-    color: "#FFFFFF",
-    fontSize: 11,
-    fontWeight: "600",
-  },
+  addTestBtnDisabled: { opacity: 0.4 },
+  addTestBtnText: { color: "#FFFFFF", fontSize: 13, fontWeight: "700" },
   testRow: {
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
-    paddingVertical: 10,
+    paddingVertical: 13,
     borderBottomWidth: 1,
     borderBottomColor: colors.border,
   },
-  testName: {
-    fontSize: 13,
-    fontWeight: "500",
-    color: colors.textPrimary,
+  testRowLast: { borderBottomWidth: 0 },
+  testInfo: { flex: 1, paddingRight: 10 },
+  testName: { fontSize: 14, fontWeight: "600", color: colors.textPrimary },
+  testDate: { ...typography.caption, marginTop: 2 },
+  testErrorsPill: {
+    backgroundColor: colors.surfaceSubtle,
+    paddingHorizontal: 9,
+    paddingVertical: 5,
+    borderRadius: 20,
   },
-  testDate: {
-    ...typography.caption,
-    marginTop: 1,
-  },
-  testErrorsCount: {
-    ...typography.caption,
-  },
-  emptyTestsBox: {
-    paddingVertical: 16,
-  },
-  emptyTestsText: {
-    ...typography.caption,
-  },
+  testErrorsCount: { fontSize: 11.5, fontWeight: "600", color: colors.textSecondary },
+  emptyTestsBox: { paddingVertical: 20 },
+  emptyTestsText: { ...typography.bodySecondary },
 });

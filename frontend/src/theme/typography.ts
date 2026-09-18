@@ -1,69 +1,62 @@
-import { Platform, TextStyle } from "react-native";
+import { TextStyle } from "react-native";
 
-export const typography: { [key: string]: TextStyle } = {
+const base: TextStyle = {
+  fontFamily: "System",
+};
+
+export const typography = {
   h1: {
-    fontFamily: Platform.select({
-      ios: "SpaceGrotesk-SemiBold",
-      android: "SpaceGrotesk-SemiBold",
-      default: "System",
-    }),
+    ...base,
+    fontSize: 24,
     fontWeight: "700",
-    fontSize: 22,
-    lineHeight: 28,
+    letterSpacing: -0.4,
     color: "#14171C",
-    letterSpacing: -0.5,
-  },
+  } as TextStyle,
   h2: {
-    fontFamily: Platform.select({
-      ios: "SpaceGrotesk-SemiBold",
-      android: "SpaceGrotesk-SemiBold",
-      default: "System",
-    }),
-    fontWeight: "600",
+    ...base,
     fontSize: 17,
-    lineHeight: 22,
+    fontWeight: "700",
+    letterSpacing: -0.2,
     color: "#14171C",
-    letterSpacing: -0.3,
-  },
+  } as TextStyle,
   h3: {
-    fontWeight: "600",
-    fontSize: 14,
-    lineHeight: 18,
+    ...base,
+    fontSize: 15,
+    fontWeight: "700",
+    letterSpacing: -0.1,
     color: "#14171C",
-  },
+  } as TextStyle,
   body: {
-    fontSize: 13,
-    lineHeight: 18,
+    ...base,
+    fontSize: 14,
+    fontWeight: "400",
     color: "#14171C",
-  },
+    lineHeight: 20,
+  } as TextStyle,
   bodySecondary: {
-    fontSize: 12,
-    lineHeight: 16,
+    ...base,
+    fontSize: 13,
+    fontWeight: "400",
     color: "#5C6470",
-  },
+    lineHeight: 19,
+  } as TextStyle,
   caption: {
-    fontSize: 11,
-    lineHeight: 14,
+    ...base,
+    fontSize: 12,
+    fontWeight: "500",
     color: "#5C6470",
-  },
+  } as TextStyle,
   mono: {
-    fontFamily: Platform.select({
-      ios: "Courier New",
-      android: "monospace",
-      default: "monospace",
-    }),
+    ...base,
     fontSize: 11,
+    fontWeight: "600",
     color: "#5C6470",
-  },
+    letterSpacing: 0.2,
+  } as TextStyle,
   impactNumber: {
-    fontFamily: Platform.select({
-      ios: "SpaceGrotesk-Bold",
-      android: "SpaceGrotesk-Bold",
-      default: "System",
-    }),
-    fontSize: 38,
+    ...base,
+    fontSize: 42,
     fontWeight: "800",
-    lineHeight: 44,
     letterSpacing: -1,
-  },
+  } as TextStyle,
 };

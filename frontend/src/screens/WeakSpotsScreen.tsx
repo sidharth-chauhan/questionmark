@@ -10,6 +10,7 @@ import {
   Image,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
+import { RefreshCw, X, Sparkles } from "lucide-react-native";
 import { colors } from "../theme/colors";
 import { typography } from "../theme/typography";
 import { RankImpactCard } from "../components/RankImpactCard";
@@ -24,7 +25,6 @@ export const WeakSpotsScreen: React.FC = () => {
   const [isRefreshing, setIsRefreshing] = useState(false);
   const [isRecomputing, setIsRecomputing] = useState(false);
 
-  // Review past mistakes state
   const [activeReviewChapter, setActiveReviewChapter] = useState<{
     id: string;
     name: string;
@@ -32,9 +32,7 @@ export const WeakSpotsScreen: React.FC = () => {
   const [reviewMistakes, setReviewMistakes] = useState<Mistake[]>([]);
   const [isFetchingReview, setIsFetchingReview] = useState(false);
   const [reviewError, setReviewError] = useState<string | null>(null);
-  const [expandedSolutions, setExpandedSolutions] = useState<{
-    [id: string]: boolean;
-  }>({});
+  const [expandedSolutions, setExpandedSolutions] = useState<{ [id: string]: boolean }>({});
 
   const fetchReport = async () => {
     try {
@@ -69,13 +67,11 @@ export const WeakSpotsScreen: React.FC = () => {
     }
   };
 
-  // Fetch the latest 5 mistakes for the selected chapter
   const handleViewClick = async (chapterId: string, chapterName: string) => {
     setActiveReviewChapter({ id: chapterId, name: chapterName });
     setIsFetchingReview(true);
     setReviewError(null);
     setReviewMistakes([]);
-
     try {
       const res = await apiClient.get(`/mistakes?chapterId=${chapterId}&limit=5`);
       setReviewMistakes(res.data.mistakes || []);
@@ -88,10 +84,7 @@ export const WeakSpotsScreen: React.FC = () => {
   };
 
   const toggleSolution = (qId: string) => {
-    setExpandedSolutions((prev) => ({
-      ...prev,
-      [qId]: !prev[qId],
-    }));
+    setExpandedSolutions((prev) => ({ ...prev, [qId]: !prev[qId] }));
   };
 
   if (isLoading) {
@@ -115,63 +108,51 @@ export const WeakSpotsScreen: React.FC = () => {
         contentContainerStyle={styles.scrollContent}
         showsVerticalScrollIndicator={false}
         refreshControl={
-          <RefreshControl
-            refreshing={isRefreshing}
-            onRefresh={onRefresh}
-            tintColor={colors.primary}
-          />
+          <RefreshControl refreshing={isRefreshing} onRefresh={onRefresh} tintColor={colors.primary} />
         }
       >
-        {/* Header */}
         <View style={styles.headerRow}>
           <View>
             <Text style={styles.title}>Weak spots</Text>
-            <Text style={styles.subtitle}>
-              Rank penalty analysis & chapter diagnostics.
-            </Text>
+            <Text style={styles.subtitle}>Rank penalty analysis and chapter diagnostics.</Text>
           </View>
 
           <TouchableOpacity
             onPress={handleRecompute}
             disabled={isRecomputing}
             style={styles.recomputeBtn}
+            activeOpacity={0.75}
           >
             {isRecomputing ? (
               <ActivityIndicator size="small" color={colors.primary} />
             ) : (
-              <Text style={styles.recomputeText}>Recalculate</Text>
+              <>
+                <RefreshCw size={13} color={colors.primary} strokeWidth={2.2} />
+                <Text style={styles.recomputeText}>Recalculate</Text>
+              </>
             )}
           </TouchableOpacity>
         </View>
 
-        {/* 1. Rank-Impact Figure */}
         <RankImpactCard
           score={report?.rankImpactScore || 0}
-          carelessMistakesCount={
-            (breakdown.CALCULATION_ERROR || 0) + (breakdown.MISREAD || 0)
-          }
-          marksLost={
-            ((breakdown.CALCULATION_ERROR || 0) + (breakdown.MISREAD || 0)) * 5
-          }
+          carelessMistakesCount={(breakdown.CALCULATION_ERROR || 0) + (breakdown.MISREAD || 0)}
+          marksLost={((breakdown.CALCULATION_ERROR || 0) + (breakdown.MISREAD || 0)) * 5}
         />
 
-        {/* Review Module (Visible when View is clicked) */}
         {activeReviewChapter && (
           <View style={styles.practiceCard}>
             <View style={styles.practiceHeader}>
               <View style={styles.practiceHeaderInfo}>
-                <Text style={styles.practiceTitle}>
-                  Review: {activeReviewChapter.name}
-                </Text>
-                <Text style={styles.practiceSubtitle}>
-                  Your latest 5 recorded errors in this chapter
-                </Text>
+                <Text style={styles.practiceTitle}>Review: {activeReviewChapter.name}</Text>
+                <Text style={styles.practiceSubtitle}>Your latest 5 recorded errors in this chapter</Text>
               </View>
               <TouchableOpacity
                 onPress={() => setActiveReviewChapter(null)}
                 style={styles.closeBtn}
+                activeOpacity={0.75}
               >
-                <Text style={styles.closeBtnText}>Close</Text>
+                <X size={16} color={colors.textSecondary} strokeWidth={2} />
               </TouchableOpacity>
             </View>
 
@@ -185,17 +166,10 @@ export const WeakSpotsScreen: React.FC = () => {
               <View style={styles.questionsContainer}>
                 {reviewMistakes.map((m, idx) => (
                   <View key={m._id} style={styles.questionItem}>
-                    <Text style={styles.questionNumber}>
-                      Question {idx + 1}
-                    </Text>
+                    <Text style={styles.questionNumber}>Question {idx + 1}</Text>
 
-                    {/* Display the actual uploaded photo */}
                     {m.photoUrl ? (
-                      <Image
-                        source={{ uri: m.photoUrl }}
-                        style={styles.image}
-                        resizeMode="contain"
-                      />
+                      <Image source={{ uri: m.photoUrl }} style={styles.image} resizeMode="cover" />
                     ) : null}
 
                     <Text style={styles.questionText}>{m.questionText}</Text>
@@ -203,18 +177,17 @@ export const WeakSpotsScreen: React.FC = () => {
                     <TouchableOpacity
                       onPress={() => toggleSolution(m._id)}
                       style={styles.toggleSolutionBtn}
+                      activeOpacity={0.75}
                     >
+                      <Sparkles size={13} color={colors.primary} strokeWidth={2} />
                       <Text style={styles.toggleSolutionText}>
-                        {expandedSolutions[m._id]
-                          ? "Hide AI hint"
-                          : "Ask AI for a hint or solution"}
+                        {expandedSolutions[m._id] ? "Hide AI hint" : "Ask AI for a hint or solution"}
                       </Text>
                     </TouchableOpacity>
 
-                    {/* Display the AI Explanation */}
                     {expandedSolutions[m._id] && (
                       <View style={styles.aiHintBox}>
-                        <Text style={styles.aiHintLabel}>✨ Gemini Diagnosis</Text>
+                        <Text style={styles.aiHintLabel}>Gemini diagnosis</Text>
                         <Text style={styles.solutionText}>{m.aiExplanation}</Text>
                       </View>
                     )}
@@ -225,7 +198,6 @@ export const WeakSpotsScreen: React.FC = () => {
           </View>
         )}
 
-        {/* 2. Top Weak Chapters List */}
         <View style={styles.section}>
           <View style={styles.sectionTitleBlock}>
             <Text style={styles.sectionTitle}>Top weak chapters</Text>
@@ -253,76 +225,63 @@ export const WeakSpotsScreen: React.FC = () => {
             </View>
           )}
         </View>
-
       </ScrollView>
     </SafeAreaView>
   );
 };
 
 const styles = StyleSheet.create({
-  safeArea: {
-    flex: 1,
-    backgroundColor: colors.background,
-  },
-  scrollContent: {
-    paddingHorizontal: 16,
-    paddingTop: 16,
-    paddingBottom: 32,
-  },
+  safeArea: { flex: 1, backgroundColor: colors.background },
+  scrollContent: { paddingHorizontal: 18, paddingTop: 20, paddingBottom: 32 },
   headerRow: {
     flexDirection: "row",
     justifyContent: "space-between",
-    alignItems: "baseline",
-    marginBottom: 16,
+    alignItems: "flex-start",
+    marginBottom: 18,
   },
-  title: {
-    ...typography.h1,
-  },
-  subtitle: {
-    ...typography.bodySecondary,
-    marginTop: 2,
-  },
+  title: { ...typography.h1, fontWeight: "700" },
+  subtitle: { ...typography.bodySecondary, marginTop: 3, maxWidth: 220 },
   recomputeBtn: {
-    paddingVertical: 4,
-    paddingHorizontal: 6,
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 5,
+    backgroundColor: colors.surface,
+    paddingHorizontal: 12,
+    paddingVertical: 7,
+    borderRadius: 20,
+    shadowColor: "#14171C",
+    shadowOpacity: 0.04,
+    shadowRadius: 6,
+    shadowOffset: { width: 0, height: 2 },
+    elevation: 1,
   },
-  recomputeText: {
-    fontSize: 11,
-    fontWeight: "500",
-    color: colors.primary,
-  },
-  section: {
-    marginTop: 24,
-  },
-  sectionTitleBlock: {
-    marginBottom: 8,
-  },
-  sectionTitle: {
-    ...typography.h2,
-  },
-  sectionSubtitle: {
-    ...typography.caption,
-    marginTop: 1,
-  },
+  recomputeText: { fontSize: 12, fontWeight: "600", color: colors.primary },
+  section: { marginTop: 28 },
+  sectionTitleBlock: { marginBottom: 10 },
+  sectionTitle: { ...typography.h2, fontWeight: "700" },
+  sectionSubtitle: { ...typography.bodySecondary, marginTop: 2 },
   hairlineList: {
-    borderTopWidth: 1,
-    borderTopColor: colors.border,
+    backgroundColor: colors.surface,
+    borderRadius: 16,
+    paddingHorizontal: 16,
+    shadowColor: "#14171C",
+    shadowOpacity: 0.03,
+    shadowRadius: 10,
+    shadowOffset: { width: 0, height: 3 },
+    elevation: 1,
   },
-  emptyBox: {
-    paddingVertical: 20,
-    borderTopWidth: 1,
-    borderTopColor: colors.border,
-  },
-  emptyText: {
-    ...typography.caption,
-  },
+  emptyBox: { paddingVertical: 24, alignItems: "center" },
+  emptyText: { ...typography.bodySecondary, textAlign: "center" },
   practiceCard: {
     backgroundColor: colors.surface,
-    borderWidth: 1,
-    borderColor: colors.border,
-    padding: 16,
-    borderRadius: 4,
+    borderRadius: 16,
+    padding: 18,
     marginTop: 16,
+    shadowColor: "#14171C",
+    shadowOpacity: 0.04,
+    shadowRadius: 12,
+    shadowOffset: { width: 0, height: 4 },
+    elevation: 1,
   },
   practiceHeader: {
     flexDirection: "row",
@@ -330,91 +289,52 @@ const styles = StyleSheet.create({
     alignItems: "flex-start",
     borderBottomWidth: 1,
     borderBottomColor: colors.border,
-    paddingBottom: 10,
-    marginBottom: 12,
+    paddingBottom: 12,
+    marginBottom: 14,
   },
-  practiceHeaderInfo: {
-    flex: 1,
-    paddingRight: 10,
-  },
-  practiceTitle: {
-    ...typography.h3,
-  },
-  practiceSubtitle: {
-    ...typography.caption,
-    marginTop: 2,
-  },
+  practiceHeaderInfo: { flex: 1, paddingRight: 10 },
+  practiceTitle: { ...typography.h3 },
+  practiceSubtitle: { ...typography.bodySecondary, marginTop: 2 },
   closeBtn: {
-    paddingVertical: 2,
+    width: 28,
+    height: 28,
+    borderRadius: 14,
+    backgroundColor: colors.surfaceSubtle,
+    alignItems: "center",
+    justifyContent: "center",
   },
-  closeBtnText: {
-    fontSize: 11,
-    color: colors.textSecondary,
-  },
-  practiceErrorText: {
-    color: colors.accentRed,
-    fontSize: 11,
-  },
-  questionsContainer: {
-    gap: 16,
-  },
+  practiceErrorText: { color: colors.accentRed, fontSize: 12 },
+  questionsContainer: { gap: 18 },
   questionItem: {
     borderBottomWidth: 1,
     borderBottomColor: colors.border,
-    paddingBottom: 12,
+    paddingBottom: 14,
   },
-  questionNumber: {
-    ...typography.mono,
-    marginBottom: 4,
-  },
+  questionNumber: { ...typography.mono, marginBottom: 6 },
   image: {
     width: "100%",
     height: 180,
     backgroundColor: colors.surfaceSubtle,
-    borderRadius: 3,
-    borderWidth: 1,
-    borderColor: colors.border,
+    borderRadius: 12,
     marginBottom: 10,
   },
   questionText: {
-    fontFamily: typography.mono.fontFamily,
-    fontSize: 12,
-    color: colors.textPrimary,
-    lineHeight: 16,
-    backgroundColor: colors.surfaceSubtle,
-    padding: 10,
-    borderRadius: 3,
-    borderWidth: 1,
-    borderColor: colors.border,
-    marginBottom: 8,
-  },
-  toggleSolutionBtn: {
-    marginVertical: 4,
-  },
-  toggleSolutionText: {
-    fontSize: 11,
-    color: colors.primary,
-    fontWeight: "500",
-  },
-  aiHintBox: {
-    backgroundColor: "#F8F9FA",
-    borderWidth: 1,
-    borderColor: colors.border,
-    borderLeftWidth: 3,
-    borderLeftColor: colors.primary,
-    padding: 12,
-    borderRadius: 4,
-    marginVertical: 8,
-  },
-  aiHintLabel: {
-    fontSize: 11,
-    fontWeight: "700",
-    color: colors.primary,
-    marginBottom: 6,
-  },
-  solutionText: {
-    fontSize: 12,
+    fontSize: 13,
     color: colors.textPrimary,
     lineHeight: 18,
+    backgroundColor: colors.surfaceSubtle,
+    padding: 12,
+    borderRadius: 12,
+    marginBottom: 8,
   },
+  toggleSolutionBtn: { flexDirection: "row", alignItems: "center", gap: 5, marginVertical: 4 },
+  toggleSolutionText: { fontSize: 12, color: colors.primary, fontWeight: "600" },
+  aiHintBox: {
+    backgroundColor: colors.primaryTint,
+    borderRadius: 12,
+    padding: 14,
+    marginVertical: 8,
+  },
+  aiHintLabel: { fontSize: 11, fontWeight: "700", color: colors.primary, marginBottom: 6 },
+  solutionText: { fontSize: 13, color: colors.textPrimary, lineHeight: 19 },
 });

@@ -27,17 +27,13 @@ export const LoginScreen: React.FC<{ navigation: any }> = ({ navigation }) => {
       setErrorMsg("Please enter email and password.");
       return;
     }
-
     setIsSubmitting(true);
     setErrorMsg(null);
-
     try {
       await login(email.trim(), password);
     } catch (err: any) {
       console.error("Login error:", err);
-      setErrorMsg(
-        err.response?.data?.message || "Invalid credentials. Please try again."
-      );
+      setErrorMsg(err.response?.data?.message || "Invalid credentials. Please try again.");
     } finally {
       setIsSubmitting(false);
     }
@@ -45,15 +41,8 @@ export const LoginScreen: React.FC<{ navigation: any }> = ({ navigation }) => {
 
   return (
     <SafeAreaView style={styles.safeArea}>
-      <KeyboardAvoidingView
-        behavior={Platform.OS === "ios" ? "padding" : "height"}
-        style={styles.container}
-      >
-        <ScrollView
-          contentContainerStyle={styles.scrollContent}
-          showsVerticalScrollIndicator={false}
-        >
-          {/* Header */}
+      <KeyboardAvoidingView behavior={Platform.OS === "ios" ? "padding" : "height"} style={styles.container}>
+        <ScrollView contentContainerStyle={styles.scrollContent} showsVerticalScrollIndicator={false}>
           <View style={styles.header}>
             <Text style={styles.logoTitle}>QuestionMark</Text>
             <Text style={styles.subtitle}>
@@ -61,7 +50,6 @@ export const LoginScreen: React.FC<{ navigation: any }> = ({ navigation }) => {
             </Text>
           </View>
 
-          {/* Form Card */}
           <View style={styles.card}>
             {errorMsg && (
               <View style={styles.errorBox}>
@@ -77,7 +65,7 @@ export const LoginScreen: React.FC<{ navigation: any }> = ({ navigation }) => {
                 autoCapitalize="none"
                 keyboardType="email-address"
                 placeholder="aspirant@example.com"
-                placeholderTextColor={colors.textSecondary}
+                placeholderTextColor={colors.textMuted}
                 style={styles.textInput}
               />
             </View>
@@ -89,7 +77,7 @@ export const LoginScreen: React.FC<{ navigation: any }> = ({ navigation }) => {
                 onChangeText={setPassword}
                 secureTextEntry
                 placeholder="••••••••"
-                placeholderTextColor={colors.textSecondary}
+                placeholderTextColor={colors.textMuted}
                 style={styles.textInput}
               />
             </View>
@@ -97,11 +85,8 @@ export const LoginScreen: React.FC<{ navigation: any }> = ({ navigation }) => {
             <TouchableOpacity
               onPress={handleSubmit}
               disabled={isSubmitting}
-              style={[
-                styles.submitBtn,
-                isSubmitting && styles.submitBtnDisabled,
-              ]}
-              activeOpacity={0.8}
+              style={[styles.submitBtn, isSubmitting && styles.submitBtnDisabled]}
+              activeOpacity={0.85}
             >
               {isSubmitting ? (
                 <ActivityIndicator size="small" color="#FFFFFF" />
@@ -110,21 +95,14 @@ export const LoginScreen: React.FC<{ navigation: any }> = ({ navigation }) => {
               )}
             </TouchableOpacity>
 
-            {/* Demo credentials hint */}
             <View style={styles.demoBox}>
-              <Text style={styles.demoLabel}>Demo account:</Text>
-              <Text style={styles.demoText}>
-                student@jee.com / password123
-              </Text>
+              <Text style={styles.demoLabel}>Demo account</Text>
+              <Text style={styles.demoText}>student@jee.com · password123</Text>
             </View>
 
-            {/* Switch to register */}
             <View style={styles.switchRow}>
               <Text style={styles.switchText}>Need an account?</Text>
-              <TouchableOpacity
-                onPress={() => navigation.navigate("Register")}
-                style={styles.switchBtn}
-              >
+              <TouchableOpacity onPress={() => navigation.navigate("Register")} style={styles.switchBtn}>
                 <Text style={styles.switchLink}>Create student profile</Text>
               </TouchableOpacity>
             </View>
@@ -136,114 +114,70 @@ export const LoginScreen: React.FC<{ navigation: any }> = ({ navigation }) => {
 };
 
 const styles = StyleSheet.create({
-  safeArea: {
-    flex: 1,
-    backgroundColor: colors.background,
-  },
-  container: {
-    flex: 1,
-  },
-  scrollContent: {
-    paddingHorizontal: 20,
-    paddingTop: 48,
-    paddingBottom: 32,
-  },
-  header: {
-    marginBottom: 24,
-  },
-  logoTitle: {
-    ...typography.h1,
-    fontSize: 26,
-    lineHeight: 32,
-  },
-  subtitle: {
-    ...typography.bodySecondary,
-    marginTop: 4,
-  },
+  safeArea: { flex: 1, backgroundColor: colors.background },
+  container: { flex: 1 },
+  scrollContent: { paddingHorizontal: 22, paddingTop: 56, paddingBottom: 32 },
+  header: { marginBottom: 28 },
+  logoTitle: { ...typography.h1, fontSize: 28, fontWeight: "800" },
+  subtitle: { ...typography.bodySecondary, marginTop: 6, lineHeight: 20 },
   card: {
     backgroundColor: colors.surface,
-    borderWidth: 1,
-    borderColor: colors.border,
-    padding: 20,
-    borderRadius: 4,
+    padding: 22,
+    borderRadius: 18,
+    shadowColor: "#14171C",
+    shadowOpacity: 0.04,
+    shadowRadius: 14,
+    shadowOffset: { width: 0, height: 6 },
+    elevation: 1,
   },
   errorBox: {
-    backgroundColor: "#FDF2F0",
-    borderWidth: 1,
-    borderColor: "#F5C6CB",
-    padding: 10,
-    borderRadius: 3,
-    marginBottom: 14,
+    backgroundColor: colors.accentRedTint,
+    padding: 12,
+    borderRadius: 12,
+    marginBottom: 16,
   },
-  errorText: {
-    color: colors.accentRed,
-    fontSize: 12,
-  },
-  fieldGroup: {
-    marginBottom: 14,
-  },
-  fieldLabel: {
-    ...typography.caption,
-    marginBottom: 4,
-    fontWeight: "500",
-  },
+  errorText: { color: colors.accentRed, fontSize: 12.5, fontWeight: "500" },
+  fieldGroup: { marginBottom: 16 },
+  fieldLabel: { ...typography.caption, marginBottom: 7, fontWeight: "600", color: colors.textPrimary },
   textInput: {
-    backgroundColor: colors.surface,
-    borderWidth: 1,
-    borderColor: colors.border,
-    paddingHorizontal: 12,
-    paddingVertical: 10,
-    borderRadius: 3,
-    fontSize: 13,
+    backgroundColor: colors.surfaceSubtle,
+    paddingHorizontal: 14,
+    paddingVertical: 13,
+    borderRadius: 12,
+    fontSize: 14,
     color: colors.textPrimary,
   },
   submitBtn: {
     backgroundColor: colors.primary,
-    paddingVertical: 12,
-    borderRadius: 3,
+    paddingVertical: 14,
+    borderRadius: 12,
     alignItems: "center",
     marginTop: 4,
   },
-  submitBtnDisabled: {
-    opacity: 0.5,
-  },
-  submitBtnText: {
-    color: "#FFFFFF",
-    fontSize: 13,
-    fontWeight: "600",
-  },
+  submitBtnDisabled: { opacity: 0.5 },
+  submitBtnText: { color: "#FFFFFF", fontSize: 14, fontWeight: "700" },
   demoBox: {
-    marginTop: 16,
-    paddingTop: 12,
+    marginTop: 18,
+    paddingTop: 14,
     borderTopWidth: 1,
     borderTopColor: colors.border,
   },
   demoLabel: {
-    fontSize: 10,
-    color: colors.textSecondary,
-    textTransform: "uppercase",
-    fontWeight: "600",
-    marginBottom: 2,
+    fontSize: 10.5,
+    color: colors.textMuted,
+    fontWeight: "700",
+    letterSpacing: 0.3,
+    marginBottom: 3,
   },
-  demoText: {
-    ...typography.mono,
-  },
+  demoText: { ...typography.mono },
   switchRow: {
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "center",
     gap: 6,
-    marginTop: 16,
+    marginTop: 18,
   },
-  switchText: {
-    ...typography.caption,
-  },
-  switchBtn: {
-    paddingVertical: 2,
-  },
-  switchLink: {
-    fontSize: 11,
-    color: colors.primary,
-    fontWeight: "600",
-  },
+  switchText: { ...typography.bodySecondary },
+  switchBtn: { paddingVertical: 2 },
+  switchLink: { fontSize: 12.5, color: colors.primary, fontWeight: "700" },
 });

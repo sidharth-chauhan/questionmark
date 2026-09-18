@@ -129,6 +129,7 @@ export const TrackScreen: React.FC = () => {
                 styles.filterChip,
                 !selectedSubjectId && styles.filterChipActive,
               ]}
+              activeOpacity={0.75}
             >
               <Text
                 style={[
@@ -151,6 +152,7 @@ export const TrackScreen: React.FC = () => {
                   styles.filterChip,
                   selectedSubjectId === sub._id && styles.filterChipActive,
                 ]}
+                activeOpacity={0.75}
               >
                 <Text
                   style={[
@@ -176,6 +178,7 @@ export const TrackScreen: React.FC = () => {
                 selectedMistakeType === "CALCULATION_ERROR" &&
                   styles.filterChipActive,
               ]}
+              activeOpacity={0.75}
             >
               <Text
                 style={[
@@ -198,6 +201,7 @@ export const TrackScreen: React.FC = () => {
                 styles.filterChip,
                 selectedMistakeType === "MISREAD" && styles.filterChipActive,
               ]}
+              activeOpacity={0.75}
             >
               <Text
                 style={[
@@ -238,28 +242,29 @@ const styles = StyleSheet.create({
     backgroundColor: colors.background,
   },
   scrollContent: {
-    paddingHorizontal: 16,
-    paddingTop: 16,
+    paddingHorizontal: 18,
+    paddingTop: 20,
     paddingBottom: 32,
   },
   header: {
-    marginBottom: 16,
+    marginBottom: 18,
   },
   title: {
     ...typography.h1,
+    fontWeight: "600",
   },
   subtitle: {
     ...typography.bodySecondary,
-    marginTop: 2,
+    marginTop: 3,
   },
   pastMistakesSection: {
-    marginTop: 24,
+    marginTop: 26,
   },
   sectionHeaderRow: {
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "baseline",
-    marginBottom: 8,
+    marginBottom: 10,
   },
   sectionTitleRow: {
     flexDirection: "row",
@@ -268,19 +273,21 @@ const styles = StyleSheet.create({
   },
   sectionTitle: {
     ...typography.h2,
+    fontWeight: "600",
   },
   sectionCount: {
     ...typography.caption,
+    color: colors.textSecondary,
   },
   filterRow: {
     flexDirection: "row",
-    gap: 6,
-    paddingBottom: 10,
+    gap: 8,
+    paddingBottom: 14,
   },
   filterChip: {
-    paddingHorizontal: 8,
-    paddingVertical: 4,
-    borderRadius: 3,
+    paddingHorizontal: 14,
+    paddingVertical: 6,
+    borderRadius: 20,
     borderWidth: 1,
     borderColor: colors.border,
     backgroundColor: colors.surface,
@@ -290,7 +297,8 @@ const styles = StyleSheet.create({
     borderColor: colors.primary,
   },
   filterChipText: {
-    fontSize: 11,
+    fontSize: 12,
+    fontWeight: "500",
     color: colors.textSecondary,
   },
   filterChipTextActive: {
@@ -302,10 +310,13 @@ const styles = StyleSheet.create({
     borderTopColor: colors.border,
   },
   emptyBox: {
-    paddingVertical: 24,
+    paddingVertical: 28,
+    alignItems: "center",
   },
   emptyText: {
     ...typography.caption,
-    textAlign: "left",
+    textAlign: "center",
+    color: colors.textSecondary,
+    lineHeight: 18,
   },
 });
