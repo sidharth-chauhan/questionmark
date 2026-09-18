@@ -112,11 +112,7 @@ export const WeakSpotsScreen: React.FC = () => {
         }
       >
         <View style={styles.headerRow}>
-          <View>
-            <Text style={styles.title}>Weak spots</Text>
-            <Text style={styles.subtitle}>Rank penalty analysis and chapter diagnostics.</Text>
-          </View>
-
+          <Text style={styles.title}>Weak spots</Text>
           <TouchableOpacity
             onPress={handleRecompute}
             disabled={isRecomputing}
@@ -201,11 +197,7 @@ export const WeakSpotsScreen: React.FC = () => {
         <View style={styles.section}>
           <View style={styles.sectionTitleBlock}>
             <Text style={styles.sectionTitle}>Top weak chapters</Text>
-            <Text style={styles.sectionSubtitle}>
-              Chapters with the highest frequency of errors in mock tests.
-            </Text>
           </View>
-
           {report?.topWeakChapters && report.topWeakChapters.length > 0 ? (
             <View style={styles.hairlineList}>
               {report.topWeakChapters.map((chapter, index) => (

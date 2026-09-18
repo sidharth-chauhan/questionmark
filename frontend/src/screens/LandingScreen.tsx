@@ -100,7 +100,7 @@ export const LandingScreen: React.FC<{ navigation: any }> = ({ navigation }) => 
             </View>
             <View style={styles.featureCard}>
               <View style={styles.featureIconWrap}>
-                <Target size={22} color={colors.primary} strokeWidth={2} />
+                <Target size={22} color={colors.accentRed} strokeWidth={2} />
               </View>
               <Text style={styles.featureTitle}>Rank Impact Scoring</Text>
               <Text style={styles.featureDesc}>
@@ -109,7 +109,7 @@ export const LandingScreen: React.FC<{ navigation: any }> = ({ navigation }) => 
             </View>
             <View style={styles.featureCard}>
               <View style={styles.featureIconWrap}>
-                <Calendar size={22} color={colors.primary} strokeWidth={2} />
+                <Calendar size={22} color={colors.accentGreen} strokeWidth={2} />
               </View>
               <Text style={styles.featureTitle}>Daily Revision Plans</Text>
               <Text style={styles.featureDesc}>

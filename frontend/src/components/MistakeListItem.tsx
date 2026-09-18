@@ -66,7 +66,7 @@ export const MistakeListItem: React.FC<MistakeListItemProps> = ({ mistake }) => 
           <View
             style={[
               styles.dot,
-              { backgroundColor: isCareless ? colors.accentRed : colors.textMuted },
+              { backgroundColor: isCareless ? colors.accentRed : colors.primary },
             ]}
           />
           <View style={styles.textCol}>
@@ -169,6 +169,11 @@ const styles = StyleSheet.create({
   },
   carelessTag: {
     color: colors.accentRed,
+    backgroundColor: "rgba(255, 114, 114, 0.15)",
+    paddingHorizontal: 6,
+    paddingVertical: 2,
+    borderRadius: 4,
+    overflow: "hidden",
   },
   defaultTag: {
     color: colors.textSecondary,

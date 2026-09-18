@@ -166,10 +166,7 @@ export const TonightsPlanScreen: React.FC = () => {
       >
         {/* Header with streak counter */}
         <View style={styles.headerRow}>
-          <View>
-            <Text style={styles.title}>Study calendar</Text>
-            <Text style={styles.subtitle}>Manage your schedule and active weak spots.</Text>
-          </View>
+          <Text style={styles.title}>Study calendar</Text>
           <StreakBadge streak={streak} />
         </View>
 
@@ -499,12 +496,12 @@ const styles = StyleSheet.create({
     width: 26,
     height: 26,
     borderRadius: 13,
-    backgroundColor: colors.primaryTint,
+    backgroundColor: colors.primary,
     alignItems: "center",
     justifyContent: "center",
     marginRight: 12,
   },
-  blockNumberText: { fontSize: 12, fontWeight: "700", color: colors.primary },
+  blockNumberText: { fontSize: 12, fontWeight: "700", color: "#FFFFFF" },
   blockInfo: { flex: 1, paddingRight: 8 },
   blockName: { fontSize: 14, fontWeight: "600", color: colors.textPrimary },
   blockDesc: { ...typography.caption, marginTop: 2 },
@@ -551,11 +548,13 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     gap: 7,
-    backgroundColor: "#EAF3EE",
+    backgroundColor: "rgba(38, 205, 161, 0.15)",
     paddingVertical: 12,
     borderRadius: 12,
+    borderWidth: 1,
+    borderColor: "rgba(38, 205, 161, 0.3)",
   },
-  doneText: { color: colors.accentGreen, fontSize: 12.5, fontWeight: "600" },
+  doneText: { color: colors.accentGreen, fontSize: 13, fontWeight: "700" },
 
   addSection: { marginTop: 16 },
   addToggleBtn: {

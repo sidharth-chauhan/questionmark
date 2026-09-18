@@ -164,11 +164,7 @@ export const UploadCard: React.FC<UploadCardProps> = ({ onSuccess, tests }) => {
 
   return (
     <View style={styles.card}>
-      <Text style={styles.cardTitle}>Log a wrong question</Text>
-      <Text style={styles.cardSubtitle}>
-        Capture mock test errors to compute rank penalties and targeted revision.
-      </Text>
-
+      <Text style={[styles.cardTitle, { marginBottom: 16 }]}>Log a wrong question</Text>
       {imageUri ? (
         <View style={styles.previewContainer}>
           <Image source={{ uri: imageUri }} style={styles.previewImage} resizeMode="cover" />
@@ -189,10 +185,10 @@ export const UploadCard: React.FC<UploadCardProps> = ({ onSuccess, tests }) => {
         </View>
       ) : (
         <View style={styles.captureBox}>
-          <View style={styles.captureIconWrap}>
-            <Camera size={20} color={colors.primary} strokeWidth={1.8} />
-          </View>
-          <Text style={styles.capturePrompt}>Snap a photo of the incorrect question</Text>
+            <View style={styles.captureIconWrap}>
+              <Camera size={22} color={colors.accentRed} strokeWidth={2} />
+            </View>
+            <Text style={styles.capturePrompt}>Snap a photo of the incorrect question</Text>
           <View style={styles.captureButtonsRow}>
             <AnimatedPressable onPress={handleTakePhoto} style={styles.cameraButton}>
               <Camera size={14} color="#FFFFFF" strokeWidth={2} />
@@ -246,7 +242,7 @@ export const UploadCard: React.FC<UploadCardProps> = ({ onSuccess, tests }) => {
             style={[styles.chip, styles.chipAi, !selectedSubjectId && styles.chipActive]}
             activeOpacity={0.75}
           >
-            <Sparkles size={12} color={!selectedSubjectId ? "#FFFFFF" : colors.primary} strokeWidth={2} />
+            <Sparkles size={12} color={!selectedSubjectId ? "#FFFFFF" : colors.accentAmber} strokeWidth={2} />
             <Text style={[styles.chipText, !selectedSubjectId && styles.chipTextActive, { marginLeft: 4 }]}>
               Auto-detect
             </Text>
@@ -310,7 +306,7 @@ export const UploadCard: React.FC<UploadCardProps> = ({ onSuccess, tests }) => {
           </View>
         ) : (
           <View style={styles.buttonInner}>
-            <Sparkles size={14} color="#FFFFFF" strokeWidth={2} />
+            <Sparkles size={14} color={colors.accentAmber} strokeWidth={2} />
             <Text style={styles.uploadButtonText}>Upload and auto-tag</Text>
           </View>
         )}
@@ -353,7 +349,7 @@ const styles = StyleSheet.create({
     width: 44,
     height: 44,
     borderRadius: 22,
-    backgroundColor: colors.primaryTint,
+    backgroundColor: colors.accentRedTint,
     alignItems: "center",
     justifyContent: "center",
     marginBottom: 10,

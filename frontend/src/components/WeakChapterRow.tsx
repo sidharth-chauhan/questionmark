@@ -71,15 +71,15 @@ const styles = StyleSheet.create({
     width: 24,
     height: 24,
     borderRadius: 12,
-    backgroundColor: colors.primaryTint,
+    backgroundColor: colors.accentAmber,
     alignItems: "center",
     justifyContent: "center",
     marginRight: 12,
   },
   rankNumber: {
     fontSize: 12,
-    fontWeight: "700",
-    color: colors.primary,
+    fontWeight: "800",
+    color: "#121324",
   },
   infoCol: { flex: 1 },
   chapterName: {
@@ -98,11 +98,11 @@ const styles = StyleSheet.create({
     paddingVertical: 7,
     borderRadius: 20,
     borderWidth: 1,
-    borderColor: colors.primary,
+    borderColor: colors.accentGreen,
   },
   practiceText: {
     fontSize: 12,
     fontWeight: "600",
-    color: colors.primary,
+    color: colors.accentGreen,
   },
 });

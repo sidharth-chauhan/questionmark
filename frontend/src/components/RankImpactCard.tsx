@@ -29,13 +29,7 @@ export const RankImpactCard: React.FC<RankImpactCardProps> = ({
         <Text style={styles.scoreNumber}>+{score.toLocaleString("en-IN")}</Text>
         <Text style={styles.scoreUnit}>ranks</Text>
       </View>
-
-      <Text style={styles.description}>
-        Estimated rank drop in JEE caused strictly by avoidable calculation slips
-        and question misreads.
-      </Text>
-
-      <View style={styles.statsRow}>
+      <View style={[styles.statsRow, { marginTop: 12 }]}>
         <View style={styles.statItem}>
           <Text style={styles.statLabel}>Careless mistakes</Text>
           <Text style={styles.statValue}>{carelessMistakesCount}</Text>

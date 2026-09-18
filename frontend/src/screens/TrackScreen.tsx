@@ -98,9 +98,6 @@ export const TrackScreen: React.FC = () => {
         {/* Page Title */}
         <View style={styles.header}>
           <Text style={styles.title}>Track mistakes</Text>
-          <Text style={styles.subtitle}>
-            Photograph questions you got wrong to identify root patterns.
-          </Text>
         </View>
 
         {/* Upload Box — Genuine Focal Point */}

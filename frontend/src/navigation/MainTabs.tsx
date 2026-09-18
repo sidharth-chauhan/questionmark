@@ -217,7 +217,7 @@ const styles = StyleSheet.create({
     letterSpacing: -0.5,
   },
   logoTitleHighlight: {
-    color: colors.primary,
+    color: colors.accentRed,
   },
   menuBtn: {
     padding: 4,

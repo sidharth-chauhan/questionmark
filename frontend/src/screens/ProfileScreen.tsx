@@ -138,10 +138,7 @@ export const ProfileScreen: React.FC = () => {
         >
           {/* Header */}
           <View style={styles.headerRow}>
-            <View>
-              <Text style={styles.title}>Profile</Text>
-              <Text style={styles.subtitle}>Student details and target milestones.</Text>
-            </View>
+            <Text style={styles.title}>Profile</Text>
           </View>
 
           {/* Student Details Form — Genuine Focal Point */}
@@ -236,11 +233,10 @@ export const ProfileScreen: React.FC = () => {
             </TouchableOpacity>
           </View>
 
-          {/* Enrolled Subjects */}
+          {/* Mock Tests Logged */}
           <View style={styles.section}>
             <View style={styles.sectionTitleBlock}>
-              <Text style={styles.sectionTitle}>Enrolled subjects</Text>
-              <Text style={styles.sectionSubtitle}>Core subjects monitored for mistake diagnostics.</Text>
+              <Text style={styles.sectionTitle}>Logged tests</Text>
             </View>
 
             <View style={styles.hairlineList}>
@@ -369,10 +365,12 @@ const styles = StyleSheet.create({
     backgroundColor: colors.surface,
     padding: 22,
     borderRadius: 18,
-    shadowColor: "#14171C",
-    shadowOpacity: 0.04,
-    shadowRadius: 14,
-    shadowOffset: { width: 0, height: 6 },
+    borderWidth: 1,
+    borderColor: colors.border,
+    shadowColor: "#000",
+    shadowOpacity: 0.15,
+    shadowRadius: 12,
+    shadowOffset: { width: 0, height: 4 },
     elevation: 1,
   },
   fieldGroup: { marginBottom: 16 },
@@ -382,20 +380,24 @@ const styles = StyleSheet.create({
     paddingHorizontal: 14,
     paddingVertical: 13,
     borderRadius: 12,
+    borderWidth: 1,
+    borderColor: colors.borderStrong,
     fontSize: 14,
     color: colors.textPrimary,
   },
   textInputDisabled: {
     color: colors.textMuted,
+    backgroundColor: colors.surface,
+    borderColor: colors.border,
   },
   chipsRow: { flexDirection: "row", gap: 9, flexWrap: "wrap" },
   chip: {
-    paddingHorizontal: 14,
+    paddingHorizontal: 16,
     paddingVertical: 8,
     borderRadius: 20,
     borderWidth: 1,
-    borderColor: colors.border,
-    backgroundColor: colors.surface,
+    borderColor: colors.borderStrong,
+    backgroundColor: colors.surfaceSubtle,
   },
   chipActive: { backgroundColor: colors.primary, borderColor: colors.primary },
   chipText: { fontSize: 12.5, fontWeight: "500", color: colors.textSecondary },
@@ -418,10 +420,12 @@ const styles = StyleSheet.create({
     backgroundColor: colors.surface,
     borderRadius: 16,
     paddingHorizontal: 16,
-    shadowColor: "#14171C",
-    shadowOpacity: 0.03,
-    shadowRadius: 10,
-    shadowOffset: { width: 0, height: 3 },
+    borderWidth: 1,
+    borderColor: colors.border,
+    shadowColor: "#000",
+    shadowOpacity: 0.15,
+    shadowRadius: 12,
+    shadowOffset: { width: 0, height: 4 },
     elevation: 1,
   },
   subjectRow: {
@@ -435,10 +439,12 @@ const styles = StyleSheet.create({
   subjectRowLast: { borderBottomWidth: 0 },
   subjectName: { fontSize: 14, fontWeight: "600", color: colors.textPrimary },
   statusChip: {
-    backgroundColor: "rgba(92, 174, 130, 0.15)",
+    backgroundColor: "rgba(38, 205, 161, 0.15)",
     paddingHorizontal: 9,
     paddingVertical: 4,
     borderRadius: 20,
+    borderWidth: 1,
+    borderColor: "rgba(38, 205, 161, 0.3)",
   },
   subjectStatus: { color: colors.accentGreen, fontSize: 11.5, fontWeight: "700" },
   addTestRow: { flexDirection: "row", gap: 8, marginBottom: 12 },
