@@ -1,4 +1,5 @@
 import React from "react";
+import { Platform } from "react-native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { TrackScreen } from "../screens/TrackScreen";
 import { WeakSpotsScreen } from "../screens/WeakSpotsScreen";
@@ -19,9 +20,9 @@ export const MainTabs: React.FC = () => {
           borderTopColor: colors.border,
           borderTopWidth: 1,
           elevation: 0,
-          height: 60,
-          paddingBottom: 8,
-          paddingTop: 8,
+          height: Platform.OS === "web" ? 66 : 60,
+          paddingBottom: Platform.OS === "web" ? 2 : 8,
+          paddingTop: Platform.OS === "web" ? 8 : 8,
         },
         tabBarActiveTintColor: colors.primary,
         tabBarInactiveTintColor: colors.textSecondary,
