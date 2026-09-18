@@ -34,8 +34,7 @@ export const RootNavigator: React.FC = () => {
 const styles = StyleSheet.create({
   webWrapper: {
     flex: 1,
-    backgroundColor: Platform.OS === "web" ? "#E4E2DD" : colors.background,
-    alignItems: Platform.OS === "web" ? "center" : "stretch",
+    backgroundColor: colors.background,
     ...(Platform.OS === "web"
       ? {
           position: "absolute",
@@ -49,14 +48,7 @@ const styles = StyleSheet.create({
   appContainer: {
     flex: 1,
     width: "100%",
-    maxWidth: Platform.OS === "web" ? 480 : "100%",
     backgroundColor: colors.background,
-    ...(Platform.OS === "web"
-      ? {
-          overflow: "hidden",
-          boxShadow: "0px 0px 15px rgba(0,0,0,0.05)",
-        }
-      : {}),
   },
   loadingContainer: {
     justifyContent: "center",

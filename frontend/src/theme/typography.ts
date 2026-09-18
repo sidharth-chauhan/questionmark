@@ -1,4 +1,5 @@
 import { TextStyle } from "react-native";
+import { colors } from "./colors";
 
 const base: TextStyle = {
   fontFamily: "System",
@@ -10,47 +11,47 @@ export const typography = {
     fontSize: 24,
     fontWeight: "700",
     letterSpacing: -0.4,
-    color: "#14171C",
+    color: colors.textPrimary,
   } as TextStyle,
   h2: {
     ...base,
     fontSize: 17,
     fontWeight: "700",
     letterSpacing: -0.2,
-    color: "#14171C",
+    color: colors.textPrimary,
   } as TextStyle,
   h3: {
     ...base,
     fontSize: 15,
     fontWeight: "700",
     letterSpacing: -0.1,
-    color: "#14171C",
+    color: colors.textPrimary,
   } as TextStyle,
   body: {
     ...base,
     fontSize: 14,
     fontWeight: "400",
-    color: "#14171C",
+    color: colors.textPrimary,
     lineHeight: 20,
   } as TextStyle,
   bodySecondary: {
     ...base,
     fontSize: 13,
     fontWeight: "400",
-    color: "#5C6470",
+    color: colors.textSecondary,
     lineHeight: 19,
   } as TextStyle,
   caption: {
     ...base,
     fontSize: 12,
     fontWeight: "500",
-    color: "#5C6470",
+    color: colors.textSecondary,
   } as TextStyle,
   mono: {
     ...base,
     fontSize: 11,
     fontWeight: "600",
-    color: "#5C6470",
+    color: colors.textSecondary,
     letterSpacing: 0.2,
   } as TextStyle,
   impactNumber: {
@@ -58,5 +59,6 @@ export const typography = {
     fontSize: 42,
     fontWeight: "800",
     letterSpacing: -1,
+    color: colors.textPrimary,
   } as TextStyle,
 };
