@@ -142,11 +142,6 @@ export const ProfileScreen: React.FC = () => {
               <Text style={styles.title}>Profile</Text>
               <Text style={styles.subtitle}>Student details and target milestones.</Text>
             </View>
-
-            <TouchableOpacity onPress={confirmSignOut} style={styles.signOutBtn} activeOpacity={0.75}>
-              <LogOut size={13} color={colors.accentRed} strokeWidth={2.2} />
-              <Text style={styles.signOutText}>Sign out</Text>
-            </TouchableOpacity>
           </View>
 
           {/* Student Details Form — Genuine Focal Point */}

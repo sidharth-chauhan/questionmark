@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Platform, View, Text, TouchableOpacity, StyleSheet } from "react-native";
+import { Platform, View, Text, TouchableOpacity, StyleSheet, Image } from "react-native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { TrackScreen } from "../screens/TrackScreen";
 import { WeakSpotsScreen } from "../screens/WeakSpotsScreen";
@@ -7,7 +7,7 @@ import { TonightsPlanScreen } from "../screens/TonightsPlanScreen";
 import { ProfileScreen } from "../screens/ProfileScreen";
 import { colors } from "../theme/colors";
 import { typography } from "../theme/typography";
-import { Target, AlertTriangle, Calendar, User, Menu, LogOut } from "lucide-react-native";
+import { AlertTriangle, Calendar, User, Menu, LogOut, Target } from "lucide-react-native";
 import { useAuth } from "../context/AuthContext";
 
 const Tab = createBottomTabNavigator();
@@ -41,8 +41,16 @@ export const MainTabs: React.FC = () => {
           <View style={[styles.logoBox, isCollapsed && styles.logoBoxCollapsed]}>
             {!isCollapsed && (
               <View style={styles.logoTextWrap}>
-                <Text style={styles.logoTitle}>QuestionMark</Text>
-                <Text style={styles.logoSubtitle}>JEE diagnostic tool</Text>
+                <View style={styles.logoBrandRow}>
+                  <Image
+                    source={require("../../assests/pic/questionmark-vibrant-v2-512.png")}
+                    style={styles.brandIcon}
+                    resizeMode="contain"
+                  />
+                  <Text style={styles.logoTitle}>
+                    Question<Text style={styles.logoTitleHighlight}>Mark</Text>
+                  </Text>
+                </View>
               </View>
             )}
             <TouchableOpacity onPress={() => setIsCollapsed(!isCollapsed)} style={styles.menuBtn}>
@@ -180,7 +188,7 @@ const styles = StyleSheet.create({
   logoBox: {
     flexDirection: "row",
     justifyContent: "space-between",
-    alignItems: "flex-start",
+    alignItems: "center",
     marginBottom: 36,
     paddingHorizontal: 8,
   },
@@ -192,19 +200,27 @@ const styles = StyleSheet.create({
     flex: 1,
     paddingRight: 8,
   },
+  logoBrandRow: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 8,
+  },
+  brandIcon: {
+    width: 26,
+    height: 26,
+    borderRadius: 6,
+  },
   logoTitle: {
     ...typography.h2,
     fontSize: 20,
-    color: colors.primary,
+    color: colors.textPrimary,
+    letterSpacing: -0.5,
   },
-  logoSubtitle: {
-    ...typography.caption,
-    marginTop: 4,
-    color: colors.textSecondary,
+  logoTitleHighlight: {
+    color: colors.primary,
   },
   menuBtn: {
     padding: 4,
-    marginTop: -2,
   },
   navMenu: {
     gap: 6,

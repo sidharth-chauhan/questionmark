@@ -426,8 +426,8 @@ const styles = StyleSheet.create({
   headerRow: {
     flexDirection: "row",
     justifyContent: "space-between",
-    alignItems: "flex-start",
-    marginBottom: 16,
+    alignItems: "center",
+    marginBottom: 20,
   },
   title: { ...typography.h1 },
   subtitle: { ...typography.bodySecondary, marginTop: 4 },

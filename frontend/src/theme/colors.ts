@@ -10,7 +10,7 @@ export const colors = {
   primary: "#8B93C9",
   primaryPressed: "#7A82B8",
   primaryTint: "#24252B",
-  accentAmber: "#E0A64C",
+  accentAmber: "#D4AF37",
   accentGreen: "#5CAE82",
   accentRed: "#D97B63",
   accentRedTint: "#3F2222",
