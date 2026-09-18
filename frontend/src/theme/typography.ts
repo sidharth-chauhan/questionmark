@@ -1,4 +1,4 @@
-import { TextStyle } from "react-native";
+import { Platform, TextStyle } from "react-native";
 import { colors } from "./colors";
 
 const base: TextStyle = {
@@ -8,9 +8,9 @@ const base: TextStyle = {
 export const typography = {
   h1: {
     ...base,
-    fontSize: 24,
-    fontWeight: "700",
-    letterSpacing: -0.4,
+    fontSize: Platform.OS === "web" ? 34 : 26,
+    fontWeight: "800",
+    letterSpacing: -0.8,
     color: colors.textPrimary,
   } as TextStyle,
   h2: {

@@ -429,8 +429,8 @@ const styles = StyleSheet.create({
     alignItems: "flex-start",
     marginBottom: 16,
   },
-  title: { ...typography.h1, fontWeight: "700" },
-  subtitle: { ...typography.bodySecondary, marginTop: 3, maxWidth: 200 },
+  title: { ...typography.h1 },
+  subtitle: { ...typography.bodySecondary, marginTop: 4 },
 
   calendarStrip: {
     flexDirection: "row",

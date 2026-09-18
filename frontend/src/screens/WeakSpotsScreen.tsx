@@ -239,8 +239,8 @@ const styles = StyleSheet.create({
     alignItems: "flex-start",
     marginBottom: 18,
   },
-  title: { ...typography.h1, fontWeight: "700" },
-  subtitle: { ...typography.bodySecondary, marginTop: 3, maxWidth: 220 },
+  title: { ...typography.h1 },
+  subtitle: { ...typography.bodySecondary, marginTop: 4 },
   recomputeBtn: {
     flexDirection: "row",
     alignItems: "center",

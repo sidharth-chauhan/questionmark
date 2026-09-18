@@ -7,12 +7,15 @@ import { TonightsPlanScreen } from "../screens/TonightsPlanScreen";
 import { ProfileScreen } from "../screens/ProfileScreen";
 import { colors } from "../theme/colors";
 import { typography } from "../theme/typography";
-import { Target, AlertTriangle, Calendar, User } from "lucide-react-native";
+import { Target, AlertTriangle, Calendar, User, Menu, LogOut } from "lucide-react-native";
+import { useAuth } from "../context/AuthContext";
 
 const Tab = createBottomTabNavigator();
 
 export const MainTabs: React.FC = () => {
   const [activeTab, setActiveTab] = useState("Track");
+  const [isCollapsed, setIsCollapsed] = useState(false);
+  const { logout } = useAuth();
 
   if (Platform.OS === "web") {
     const renderScreen = () => {
@@ -34,10 +37,17 @@ export const MainTabs: React.FC = () => {
 
     return (
       <View style={styles.webLayout}>
-        <View style={styles.sidebar}>
-          <View style={styles.logoBox}>
-            <Text style={styles.logoTitle}>QuestionMark</Text>
-            <Text style={styles.logoSubtitle}>JEE diagnostic tool</Text>
+        <View style={[styles.sidebar, isCollapsed && styles.sidebarCollapsed]}>
+          <View style={[styles.logoBox, isCollapsed && styles.logoBoxCollapsed]}>
+            {!isCollapsed && (
+              <View style={styles.logoTextWrap}>
+                <Text style={styles.logoTitle}>QuestionMark</Text>
+                <Text style={styles.logoSubtitle}>JEE diagnostic tool</Text>
+              </View>
+            )}
+            <TouchableOpacity onPress={() => setIsCollapsed(!isCollapsed)} style={styles.menuBtn}>
+              <Menu size={20} color={colors.textSecondary} strokeWidth={2.5} />
+            </TouchableOpacity>
           </View>
           <View style={styles.navMenu}>
             {navItems.map((item) => {
@@ -47,20 +57,37 @@ export const MainTabs: React.FC = () => {
                 <TouchableOpacity
                   key={item.id}
                   onPress={() => setActiveTab(item.id)}
-                  style={[styles.navItem, isActive && styles.navItemActive]}
+                  style={[styles.navItem, isActive && styles.navItemActive, isCollapsed && styles.navItemCollapsed]}
                   activeOpacity={0.8}
                 >
                   <Icon color={isActive ? "#FFFFFF" : colors.textSecondary} size={18} strokeWidth={2.5} />
-                  <Text style={[styles.navText, isActive && styles.navTextActive]}>
-                    {item.label}
-                  </Text>
+                  {!isCollapsed && (
+                    <Text style={[styles.navText, isActive && styles.navTextActive]}>
+                      {item.label}
+                    </Text>
+                  )}
                 </TouchableOpacity>
               );
             })}
           </View>
+          <View style={styles.spacer} />
+          <TouchableOpacity
+            onPress={() => {
+              if (window.confirm("Are you sure you want to sign out?")) {
+                logout();
+              }
+            }}
+            style={[styles.navItem, isCollapsed && styles.navItemCollapsed]}
+            activeOpacity={0.8}
+          >
+            <LogOut color={colors.accentRed} size={18} strokeWidth={2.5} />
+            {!isCollapsed && <Text style={styles.signOutText}>Sign out</Text>}
+          </TouchableOpacity>
         </View>
         <View style={styles.contentArea}>
-          {renderScreen()}
+          <View style={styles.webContentConstrain}>
+            {renderScreen()}
+          </View>
         </View>
       </View>
     );
@@ -146,9 +173,24 @@ const styles = StyleSheet.create({
     borderRightWidth: 1,
     borderRightColor: colors.border,
   },
+  sidebarCollapsed: {
+    width: 80,
+    paddingHorizontal: 12,
+  },
   logoBox: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "flex-start",
     marginBottom: 36,
     paddingHorizontal: 8,
+  },
+  logoBoxCollapsed: {
+    justifyContent: "center",
+    paddingHorizontal: 0,
+  },
+  logoTextWrap: {
+    flex: 1,
+    paddingRight: 8,
   },
   logoTitle: {
     ...typography.h2,
@@ -159,6 +201,10 @@ const styles = StyleSheet.create({
     ...typography.caption,
     marginTop: 4,
     color: colors.textSecondary,
+  },
+  menuBtn: {
+    padding: 4,
+    marginTop: -2,
   },
   navMenu: {
     gap: 6,
@@ -171,6 +217,10 @@ const styles = StyleSheet.create({
     paddingVertical: 12,
     borderRadius: 8,
   },
+  navItemCollapsed: {
+    justifyContent: "center",
+    paddingHorizontal: 0,
+  },
   navItemActive: {
     backgroundColor: colors.primary,
   },
@@ -182,8 +232,22 @@ const styles = StyleSheet.create({
   navTextActive: {
     color: "#FFFFFF",
   },
+  spacer: {
+    flex: 1,
+  },
+  signOutText: {
+    fontSize: 14,
+    fontWeight: "600",
+    color: colors.accentRed,
+  },
   contentArea: {
     flex: 1,
     backgroundColor: colors.background,
+  },
+  webContentConstrain: {
+    flex: 1,
+    width: "100%",
+    maxWidth: 880,
+    alignSelf: "center",
   },
 });

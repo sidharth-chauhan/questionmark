@@ -251,11 +251,10 @@ const styles = StyleSheet.create({
   },
   title: {
     ...typography.h1,
-    fontWeight: "600",
   },
   subtitle: {
     ...typography.bodySecondary,
-    marginTop: 3,
+    marginTop: 4,
   },
   pastMistakesSection: {
     marginTop: 26,

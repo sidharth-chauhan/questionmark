@@ -108,10 +108,16 @@ export const ProfileScreen: React.FC = () => {
   };
 
   const confirmSignOut = () => {
-    Alert.alert("Sign out", "Are you sure you want to sign out?", [
-      { text: "Cancel", style: "cancel" },
-      { text: "Sign out", style: "destructive", onPress: logout },
-    ]);
+    if (Platform.OS === "web") {
+      if (window.confirm("Are you sure you want to sign out?")) {
+        logout();
+      }
+    } else {
+      Alert.alert("Sign out", "Are you sure you want to sign out?", [
+        { text: "Cancel", style: "cancel" },
+        { text: "Sign out", style: "destructive", onPress: logout },
+      ]);
+    }
   };
 
   if (isLoading) {
@@ -355,8 +361,8 @@ const styles = StyleSheet.create({
     alignItems: "flex-start",
     marginBottom: 18,
   },
-  title: { ...typography.h1, fontWeight: "700" },
-  subtitle: { ...typography.bodySecondary, marginTop: 3, maxWidth: 220 },
+  title: { ...typography.h1 },
+  subtitle: { ...typography.bodySecondary, marginTop: 4 },
   signOutBtn: {
     flexDirection: "row",
     alignItems: "center",
