@@ -3,6 +3,9 @@ import { colors } from "../theme/colors";
 import { useAuth } from "../context/AuthContext";
 import { BrandPanel } from "../components/BrandPanel";
 
+const brandIconSource = require("../../assests/pic/questionmark-vibrant-v2-512.png");
+const brandIconUri = typeof brandIconSource === "string" ? brandIconSource : brandIconSource.uri || brandIconSource.default;
+
 export const LoginScreen: React.FC<{ navigation: any }> = ({ navigation }) => {
   const { login } = useAuth();
   const [email, setEmail] = useState("student@jee.com");
@@ -105,8 +108,14 @@ export const LoginScreen: React.FC<{ navigation: any }> = ({ navigation }) => {
         <div style={styles.formPanel}>
           <div style={styles.formInner}>
             <div style={styles.wordmarkRow}>
-              <span style={styles.wordmarkWhite}>Question</span>
-              <span style={styles.wordmarkCoral}>Mark</span>
+              <img
+                src={brandIconUri}
+                style={styles.brandIcon}
+              />
+              <div>
+                <span style={styles.wordmarkWhite}>Question</span>
+                <span style={styles.wordmarkCoral}>Mark</span>
+              </div>
             </div>
             <p style={styles.subtitle}>
               Sign in to review mistake patterns and nightly revision blocks.
@@ -202,7 +211,8 @@ const styles: Record<string, React.CSSProperties> = {
     width: "100%",
     maxWidth: 380,
   },
-  wordmarkRow: { marginBottom: 6 },
+  wordmarkRow: { marginBottom: 6, display: "flex", flexDirection: "row", alignItems: "center", gap: 8 },
+  brandIcon: { width: 32, height: 32, borderRadius: 7, objectFit: "contain" },
   wordmarkWhite: { fontSize: 28, fontWeight: 800, color: colors.textPrimary, letterSpacing: -0.5 },
   wordmarkCoral: { fontSize: 28, fontWeight: 800, color: colors.accentRed, letterSpacing: -0.5 },
   subtitle: {
